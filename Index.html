@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Fantasy Grounds Web Builder</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+
+    <link href="styles.css" rel="stylesheet" />
+</head>
+
+<body>
+    <div id="parchment"></div>
+    <div id="wrapper" class="container pt-3">
+        <h4>Select record type</h4>
+        <div class="row">
+            <div class="col-2">
+                <select id="select_recordtype" class="form-control">
+                    <option selected>Item</option>
+                    <option>Npc</option>
+                    <option>Spell</option>
+                </select>
+            </div>
+        </div>
+        <form id="ItemForm" data-record-type="item" class="py-3">
+            <div class="d-flex flex-column h-100">
+                <h4>Create Item</h4>
+                <div class="row" style="flex-grow: 1;">
+                    <div class="col-6">
+                        <div class="row">
+                            <div class="col">
+                                <input id="ItemForm_name" name="name" class="form-control" placeholder="Name" />
+                            </div>
+                            <div class="col">
+                                <input id="ItemForm_nonid_name" name="nonid_name" class="form-control"
+                                    placeholder="Non-Id Name" />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <input id="ItemForm_type" name="type" class="form-control" placeholder="Type" />
+                            </div>
+                            <div class="col">
+                                <input id="ItemForm_subtype" name="subtype" class="form-control" placeholder="Sub-Type" />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <input id="ItemForm_rarity" name="rarity" class="form-control" placeholder="Rarity" />
+                            </div>
+                            <div class="col">
+                                <input id="ItemForm_cost" name="cost" class="form-control" placeholder="Cost" />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-6">
+                                <input id="ItemForm_weight" name="weight" class="form-control" type="number"
+                                    placeholder="Weight" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6 d-flex flex-column">
+                        <textarea id="ItemForm_notes" name="notes" class="form-control"
+                            placeholder="Notes (usually a brief physical description)"></textarea>
+                        <div id="ItemForm_description_toolbar">
+                            <button class="ql-bold">Bold</button>
+                            <button class="ql-italic">Italic</button>
+                        </div>
+                        <div style="flex-grow: 1;">
+                            <textarea hidden id="ItemForm_description_editor_value" name="description"></textarea>
+                            <div id="ItemForm_description_editor" class="quill" placeholder="Description"></div>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <button type="submit" class="btn btn-primary">Save Item</button>
+                </div>
+            </div>
+        </form><!-- Item Form -->
+        <form hidden id="NpcForm" data-record-type="npc" class="py-3">
+            <div class="row">
+                <div class="col">
+                    <h4>Create NPC</h4>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-6">
+                    <div class="row">
+                        <div class="col-6">
+                            <input id="NpcForm_name" name="name" class="form-control" placeholder="Name" />
+                        </div>
+                        <div class="col-6">
+                            <input id="NpcForm_nonid_name" name="nonid_name" class="form-control"
+                                placeholder="Non-Id Name" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-4">
+                            <input id="NpcForm_size" name="size" class="form-control" placeholder="Size" />
+                        </div>
+                        <div class="col-4">
+                            <input id="NpcForm_type" name="type" class="form-control" placeholder="Type" />
+                        </div>
+                        <div class="col-4">
+                            <input id="NpcForm_alignment" name="alignment" class="form-control"
+                                placeholder="Alignment" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-4">
+                            <input id="NpcForm_ac" name="ac" type="number" class="form-control"
+                                placeholder="AC" />
+                        </div>
+                        <div class="col-8">
+                            <input id="NpcForm_actext" name="actext" class="form-control" placeholder="AC Note" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-4">
+                            <input id="NpcForm_hp" name="hp" type="number" class="form-control"
+                                placeholder="HP" />
+                        </div>
+                        <div class="col-8">
+                            <input id="NpcForm_hd" name="hd" class="form-control" placeholder="HP calculation" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-4">
+                            <input id="NpcForm_damagethreshold" type="number" name="damagethreshold" class="form-control"
+                                placeholder="Damage Threshold" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-4">
+                            <input id="NpcForm_speed" name="speed" class="form-control" placeholder="Speed" />
+                        </div>
+                    </div>
+                    <div id="NpcForm_abilities" class="row">
+                        <div class="col-2 ability-container">
+                            <input id="NpcForm_strength_score" type="number" name="strength_score" type="number"
+                                class="form-control" value="10" />
+                            <span id="NpcForm_strength_bonus" type="number">+0</span>
+                        </div>
+                        <div class="col-2 ability-container">
+                            <input id="NpcForm_dexterity_score" type="number" name="dexterity_score" type="number"
+                                class="form-control" value="10" />
+                            <span id="NpcForm_dexterity_bonus" type="number">+0</span>
+                        </div>
+                        <div class="col-2 ability-container">
+                            <input id="NpcForm_constitution_score" type="number" name="constitution_score" type="number"
+                                class="form-control" value="10" />
+                            <span id="NpcForm_constitution_bonus" type="number">+0</span>
+                        </div>
+                        <div class="col-2 ability-container">
+                            <input id="NpcForm_intelligence_score" type="number" name="intelligence_score" type="number"
+                                class="form-control" value="10" />
+                            <span id="NpcForm_intelligence_bonus" type="number">+0</span>
+                        </div>
+                        <div class="col-2 ability-container">
+                            <input id="NpcForm_wisdom_score" type="number" name="wisdom_score" type="number"
+                                class="form-control" value="10" />
+                            <span id="NpcForm_wisdom_bonus" type="number">+0</span>
+                        </div>
+                        <div class="col-2 ability-container">
+                            <input id="NpcForm_charisma_score" type="number" name="charisma_score" type="number"
+                                class="form-control" value="10" />
+                            <span id="NpcForm_charisma_bonus">+0</span>
+                        </div>
+                    </div>
+
+                    <!-- //TODO: Implement picklist autocompleter (Something like the JQuery UI tag widget?) -->
+                    <textarea id="NpcForm_savingthrows" class="form-control info-medium"
+                        placeholder="Saving Throws"></textarea>
+                    <textarea id="NpcForm_skills" class="form-control info-medium" placeholder="Skills"></textarea>
+                    <textarea id="NpcForm_damagevulnerabilities" class="form-control info-medium"
+                        placeholder="Damage Vulnerabilities"></textarea>
+                    <textarea id="NpcForm_damageresistances" class="form-control info-medium"
+                        placeholder="Damage Resistances"></textarea>
+                    <textarea id="NpcForm_damageimmunities" class="form-control info-medium"
+                        placeholder="Damage Immunities"></textarea>
+                    <textarea id="NpcForm_conditionimmunities" class="form-control info-medium"
+                        placeholder="Condition Immunities"></textarea>
+
+                    <input id="NpcForm_senses" name="senses" class="form-control" placeholder="Senses" />
+                    <input id="NpcForm_languages" name="languages" class="form-control" placeholder="Languages" />
+
+                    <input id="NpcForm_cr" name="cr" class="form-control" placeholder="CR" />
+                    <!-- Display Prof. Bonus -->
+                    <input id="NpcForm_xp" name="xp" class="form-control" type="number" placeholder="XP" />
+
+                    <!-- //TODO: 
+                    <traits />
+                    <actions />
+                    <bonusactions />
+                    <reactions />
+                    <legendaryactions />
+                    <lairactions />
+                    <innatespells />
+                    <spells />
+                -->
+
+                </div>
+                <div class="col-6 d-flex flex-column">
+                    <!-- //TODO:
+                    <token type="token"></token>
+                -->
+                    <div id="NpcForm_description_toolbar">
+                        <button class="ql-bold">Bold</button>
+                        <button class="ql-italic">Italic</button>
+                    </div>
+                    <div style="flex-grow: 1">
+                        <textarea hidden id="NpcForm_description_editor_value" name="text"></textarea>
+                        <div id="NpcForm_description_editor" class="quill"></div>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <button type="submit" class="btn btn-primary">Save NPC</button>
+            </div>
+        </form>
+        <form hidden id="SpellForm" data-record-type="spell" class="py-3">
+            <div class="d-flex flex-column h-100">
+                <div class="row">
+                    <div class="col">
+                        <h4>Create Spell</h4>
+                    </div>
+                </div>
+                <div class="row" style="flex-grow: 1;">
+                    <div class="col-6">
+                        <input id="SpellForm_name" name="name" class="form-control" placeholder="Name" />
+                        <div class="row">
+                            <div class="col-6">
+                                <input id="SpellForm_level" name="level" type="number" class="form-control" placeholder="Level" min="1" max="9" />
+                            </div>
+                            <div class="col">
+                                <input id="SpellForm_school" name="school" class="form-control" placeholder="School" />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <input id="SpellForm_castingtime" name="castingtime" class="form-control" placeholder="Casting Time" />
+                            </div>
+                            <div class="col">
+                                <input id="SpellForm_range" name="range" class="form-control" placeholder="Range" />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-6">
+                                <input id="SpellForm_components" name="components" class="form-control" placeholder="Components" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6 d-flex flex-column">
+                        <div id="SpellForm_description_toolbar">
+                            <button class="ql-bold">Bold</button>
+                            <button class="ql-italic">Italic</button>
+                        </div>
+                        <div style="flex-grow: 1;">
+                            <textarea hidden id="SpellForm_description_editor_value" name="description"></textarea>
+                            <div id="SpellForm_description_editor" class="quill" placeholder="Description"></div>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <button type="submit" class="btn btn-primary">Save Spell</button>
+                </div>
+            </div>
+        </form><!-- Spell Form -->
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sizzle/2.3.10/sizzle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/xml-js@1.6.11/dist/xml-js.min.js"></script>
+    <script src="app.js"></script>
+
+    <svg hidden>
+        <filter id="wavy2">
+            <feTurbulence x="0" y="0" baseFrequency="0.03" numOctaves="7" seed="1"></feTurbulence>
+            <feDisplacementMap in="SourceGraphic" scale="20" />
+        </filter>
+    </svg>
+</body>
+
+</html>

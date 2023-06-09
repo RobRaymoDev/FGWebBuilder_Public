@@ -1,0 +1,55 @@
+#wrapper {
+  margin-right: auto;
+  margin-left: auto;
+  height: 100vh;
+  max-width: 1280px;
+  overflow-y: auto;
+}
+#wrapper * {
+  box-sizing: border-box;
+}
+#wrapper select.form-control,
+#wrapper textarea.form-control {
+  border-radius: 0;
+}
+#wrapper .form-control {
+  margin-bottom: 3px;
+}
+#wrapper .form-control,
+#wrapper .quill,
+#wrapper .ql-toolbar {
+  background-color: #f3f2e3;
+  border-width: 0;
+  box-shadow: inset 0 0 3px rgba(93, 56, 27, 0.8), 0 0 2px 1px rgba(93, 56, 27, 0.8);
+}
+#wrapper #ItemForm {
+  height: 35%;
+}
+#wrapper #NpcForm {
+  height: 65%;
+}
+#wrapper .info-small {
+  height: 1em;
+}
+#wrapper .info-medium {
+  height: 2em;
+}
+#wrapper .info-large {
+  height: 5em;
+}
+body {
+  overflow-y: hidden;
+  overflow-x: hidden;
+}
+body #parchment {
+  position: absolute;
+  top: -5px;
+  left: -5px;
+  box-sizing: content-box;
+  z-index: -999;
+  height: calc(100% + 10px);
+  width: calc(100% + 10px);
+  box-shadow: 4px 6px 40px black, 0 0 120px #8a4d0f inset;
+  background: #fffef0;
+  filter: url(#wavy2);
+}
